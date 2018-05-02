@@ -1,7 +1,7 @@
 {
-  "name": "running-business-fe",
+  "name": "running-business-fe-user",
   "version": "1.0.0",
-  "description": "跑商项目-前端",
+  "description": "跑商-User",
   "author": "Anson",
   "private": true,
   "scripts": {

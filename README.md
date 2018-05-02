@@ -1,6 +1,6 @@
 # running-business-fe
 
-> 跑商项目-前端
+> 跑商-用户端
 
 ## Build Setup
 

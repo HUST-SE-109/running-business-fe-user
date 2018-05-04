@@ -7,7 +7,7 @@
           placeholder="请输入手机号"
           suffix-icon="el-icon-mobile-phone"
           v-model="username"
-          @blur="handleBlur"
+          @blur="handleUsernameBlur"
           clearable
         >
         </el-input>
@@ -18,22 +18,26 @@
           suffix-icon="el-icon-message"
           type="password"
           v-model="password"
+          @blur="handlePasswordBlur"
           clearable
         >
         </el-input>
       </div>
       <div class="input-group">
         <el-button
-          @click.native="register" type="primary" :loading="isLoading">{{ btnText }}
+          @click="login" type="primary" :loading="isLoading">{{ buttonText }}
         </el-button>
       </div>
+      <el-button type="text">
+        <router-link to="/register">没有账号，去注册</router-link>
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
 import { isMobile, checkPassword } from '@/util/util';
-import { checkUserRegistered, register } from '../../api/register';
+import { login } from '@/api/login';
 
 export default {
   data() {
@@ -41,82 +45,75 @@ export default {
       username: '',
       password: '',
       isLoading: false,
-      isRegistered: true,
+      canLogin: false,
     };
   },
   computed: {
-    btnText() {
-      if (this.isLoading) return '注册中...';
-      return '注册';
+    buttonText() {
+      if (this.isLoading) return '登录中...';
+      return '登录';
     },
   },
   methods: {
-    checkRegistered() {
-      checkUserRegistered(this.username)
-        .then(({ code }) => {
-          if (code === '200') {
-            this.isRegistered = false;
-            this.$message({
-              message: '恭喜您，账号可用！',
-              type: 'success',
-            });
-          } else {
-            this.isRegistered = true;
-            this.$message({
-              message: '用户已注册',
-              type: 'warning',
-            });
-          }
-        });
-    },
-    checkUserInfo() {
+    // 检查用户名
+    checkUserName() {
       if (!this.username) {
         this.$message.error('请填写手机号');
+        this.canLogin = false;
         return;
       }
       if (this.username && !isMobile(this.username)) {
         this.$message.error('请填写正确格式手机号');
+        this.canLogin = false;
         return;
       }
+      this.canLogin = true;
+    },
+    // 检查密码
+    checkPassword() {
       if (!this.password) {
         this.$message.error('请填写密码');
+        this.canLogin = false;
         return;
       }
       if (this.password && !checkPassword(this.password)) {
         this.$message.error('密码应为6-18位');
+        this.canLogin = false;
+        return;
       }
+      this.canLogin = true;
     },
-    handleBlur() {
-      this.checkRegistered();
+    handleUsernameBlur() {
+      this.checkUserName();
     },
-    register() {
-      this.checkUserInfo();
-      // this.isLoading = true;
-      const data = {
+    handlePasswordBlur() {
+      this.checkPassword();
+    },
+    // 注册
+    login() {
+      this.checkUserName();
+      this.checkPassword();
+      const params = {
         userphone: this.username,
         password: this.password,
       };
-      register(data)
-        .then(({ code }) => {
-        });
-      /*
-          requestLogin(loginParams).then((data) => {
-            console.log(data);
-            this.isBtnLoading = false;
-            const { msg, code, user } = data;
-            if (code !== 200) {
-              this.$message.error(msg);
-            } else {
-              localStorage.setItem('user', JSON.stringify(user));
-              if (this.$route.query.redirect) {
-                this.$router.push({ path: this.$route.query.redirect });
-              } else {
-                this.$router.push({ path: '/list' });
-              }
+      if (this.canLogin) {
+        this.isLoading = true;
+        login(params)
+          .then(({ data }) => {
+            if (data.code === '200') {
+              this.isLoading = false;
+              this.$message({
+                message: '登录成功！',
+                type: 'success',
+              });
+              this.$router.push({ path: '/' });
+            } else if (data.code === '1001003') {
+              this.isLoading = false;
+              this.$message.error('密码错误');
             }
-
           });
-          */
+      }
     },
   },
 };

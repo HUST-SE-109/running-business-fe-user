@@ -1,6 +1,6 @@
 <template>
-  <div id="login-page" @keyup.enter="register">
-    <div class="login-form">
+  <div id="register-page" @keyup.enter="register">
+    <div class="register-form">
       <div class="title">跑商-用户注册</div>
       <div class="input-group">
         <el-input
@@ -25,7 +25,7 @@
       </div>
       <div class="input-group">
         <el-button
-          @click.native="register" type="primary" :loading="isLoading">{{ buttonText }}
+          @click="register" type="primary" :loading="isLoading">{{ buttonText }}
         </el-button>
       </div>
       <el-button type="text">
@@ -37,7 +37,7 @@
 
 <script>
 import { isMobile, checkPassword } from '@/util/util';
-import { checkUserRegistered, register } from '../../api/register';
+import { checkUserRegistered, register } from '@/api/register';
 
 export default {
   data() {
@@ -116,12 +116,12 @@ export default {
     register() {
       this.checkUserName();
       this.checkPassword();
-      this.isLoading = true;
       const params = {
         userphone: this.username,
         password: this.password,
       };
       if (this.isRegistered && !this.hasUsername) {
+        this.isLoading = true;
         register(params)
           .then(({ data }) => {
             if (data.code === '200') {
@@ -140,7 +140,7 @@ export default {
 </script>
 
 <style lang="less">
-  #login-page {
+  #register-page {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -148,7 +148,7 @@ export default {
     align-items: center;
     background: #efeeee;
 
-    .login-form {
+    .register-form {
       display: flex;
       flex-direction: column;
       justify-content: center;

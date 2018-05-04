@@ -15,7 +15,7 @@ export const registerRouter = {
   meta: {
     title: 'Register - 注册',
   },
-  component: () => import('@/views/register/register.vue'),
+  component: () => import('@/views/register/Register.vue'),
 };
 
 export const error404 = {
@@ -29,10 +29,10 @@ export const error404 = {
 
 export const error500 = {
   path: '/500',
+  name: 'error-500',
   meta: {
     title: '500-服务端错误',
   },
-  name: 'error-500',
   component: () => import('@/views/error-page/500.vue'),
 };
 
@@ -44,11 +44,10 @@ export const appRouter = [
   },
 ];
 
-
 export const routers = [
   loginRouter,
   registerRouter,
-  error404,
-  error500,
   ...appRouter,
+  error500,
+  error404,
 ];

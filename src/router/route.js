@@ -40,7 +40,34 @@ export const appRouter = [
   {
     path: '/',
     name: 'Layout',
+    redirect: '/home',
     component: Layout,
+    children: [
+      {
+        path: 'home',
+        title: '首页',
+        name: 'home',
+        component: () => import('@/views/home/home.vue'),
+      },
+      {
+        path: 'introduction',
+        title: '服务介绍',
+        name: 'introduction',
+        component: () => import('@/views/service-introduce/ServiceIntroduce.vue'),
+      },
+      {
+        path: 'order',
+        title: '在线下单',
+        name: 'order',
+        component: () => import('@/views/order/order.vue'),
+      },
+      {
+        path: 'about',
+        title: '关于跑商',
+        name: 'about',
+        component: () => import('@/views/order/order.vue'),
+      },
+    ],
   },
 ];
 

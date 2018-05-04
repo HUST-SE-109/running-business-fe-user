@@ -24,8 +24,8 @@
         </el-input>
       </div>
       <div class="input-group">
-        <el-button
-          @click="register" type="primary" :loading="isLoading">{{ buttonText }}
+        <el-button @click="register" type="primary" :loading="isLoading">
+          {{ buttonText }}
         </el-button>
       </div>
       <el-button type="text">

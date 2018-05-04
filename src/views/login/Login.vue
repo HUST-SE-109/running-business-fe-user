@@ -24,8 +24,8 @@
         </el-input>
       </div>
       <div class="input-group">
-        <el-button
-          @click="login" type="primary" :loading="isLoading">{{ buttonText }}
+        <el-button @click="login" type="primary" :loading="isLoading">
+          {{ buttonText }}
         </el-button>
       </div>
       <el-button type="text">
@@ -37,6 +37,7 @@
 
 <script>
 import { isMobile, checkPassword } from '@/util/util';
+import Cookie from 'js-cookie';
 import { login } from '@/api/login';
 
 export default {
@@ -89,7 +90,7 @@ export default {
     handlePasswordBlur() {
       this.checkPassword();
     },
-    // 注册
+    // 登录
     login() {
       this.checkUserName();
       this.checkPassword();
@@ -103,6 +104,7 @@ export default {
           .then(({ data }) => {
             if (data.code === '200') {
               this.isLoading = false;
+              Cookie.set('RUN_TOKEN', data.data);
               this.$message({
                 message: '登录成功！',
                 type: 'success',

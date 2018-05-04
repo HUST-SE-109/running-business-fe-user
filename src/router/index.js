@@ -1,15 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Layout from '../views/layout/Layout';
+import { routers } from './route';
+
 
 Vue.use(Router);
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Layout',
-      component: Layout,
-    },
-  ],
-});
+const RouterConfig = {
+  routes: routers,
+};
+
+const router = new Router(RouterConfig);
+
+export default router;

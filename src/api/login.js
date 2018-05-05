@@ -1,4 +1,4 @@
-import request from '@/util/request';
+import request from '@/utils/request';
 
 // 登录
 const login = data => request({
@@ -7,6 +7,12 @@ const login = data => request({
   data,
 });
 
+const logout = token => request({
+  url: `/users/logout/${token}`,
+  method: 'post',
+});
+
 export {
   login,
+  logout,
 };

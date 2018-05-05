@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { isMobile, checkPassword } from '@/util/util';
+import { isMobile, checkPassword } from '@/utils/util';
 import { checkUserRegistered, register } from '@/api/register';
 
 export default {

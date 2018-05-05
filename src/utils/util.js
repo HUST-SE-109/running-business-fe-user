@@ -1,4 +1,3 @@
-
 // 手机号码验证
 const isMobile = mobileNumber => /^0?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/.test(mobileNumber);
 
@@ -8,8 +7,14 @@ const isIdientify = idNumber => /^((1[1-5])|(2[1-3])|(3[1-7])|(4[1-6])|(5[0-4])|
 // 密码长度验证
 const checkPassword = password => password.length >= 6 && password.length <= 18;
 
+const setTitle = (title = 'Running Business') => {
+  window.document.title = title;
+};
+
+
 export {
   isMobile,
   isIdientify,
   checkPassword,
+  setTitle,
 };

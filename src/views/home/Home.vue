@@ -17,11 +17,17 @@ import { getUserInfo } from '@/api/user';
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      username: '',
+    };
+  },
   methods: {
     handleUsernameBlur() {
       getUserInfo()
         .then((res) => {
-          console.log(res);
+          // console.log(res);
+          this.username = res.data.code;
         });
     },
   },

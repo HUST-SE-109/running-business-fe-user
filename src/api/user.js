@@ -1,13 +1,9 @@
-import request from '@/util/request';
-import Cookie from 'js-cookie';
+import request from '@/utils/request';
 
 // 获取用户信息
 const getUserInfo = () => request({
   url: '/users/info',
   method: 'get',
-  headers: {
-    Cookie: `RUN_TOKEN=${Cookie.get('RUN_TOKEN')}`,
-  },
 });
 
 // 更新用户信息

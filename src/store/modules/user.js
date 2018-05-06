@@ -11,11 +11,14 @@ const user = {
   },
 
   mutations: {
+    SET_USER_PHONE: (state, userPhone) => {
+      state.userPhone = userPhone;
+    },
+    SET_USER_NAME: (state, userName) => {
+      state.userName = userName;
+    },
     SET_TOKEN: (state, token) => {
       state.token = token;
-    },
-    SET_NAME: (state, name) => {
-      state.name = name;
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar;

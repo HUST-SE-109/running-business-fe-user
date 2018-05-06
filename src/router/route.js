@@ -59,7 +59,46 @@ export const appRouter = [
         path: 'order',
         title: '在线下单',
         name: 'order',
+        redirect: '/order/helpBuy',
         component: () => import('@/views/order/order.vue'),
+        children: [
+          {
+            path: 'helpBuy',
+            title: '帮我买',
+            name: 'helpBuy',
+            meta: {
+              title: '在线下单-帮我买',
+            },
+            component: () => import('@/views/order/components/HelpBuy.vue'),
+          },
+          {
+            path: 'helpSend',
+            title: '帮我送',
+            name: 'helpSend',
+            meta: {
+              title: '在线下单-帮我送',
+            },
+            component: () => import('@/views/order/components/HelpSend.vue'),
+          },
+          {
+            path: 'helpGet',
+            title: '帮我取',
+            name: 'helpGet',
+            meta: {
+              title: '在线下单-帮我取',
+            },
+            component: () => import('@/views/order/components/HelpGet.vue'),
+          },
+          {
+            path: 'helpQueue',
+            title: '代排队',
+            name: 'helpQueue',
+            meta: {
+              title: '在线下单-代排队',
+            },
+            component: () => import('@/views/order/components/HelpQueue.vue'),
+          },
+        ],
       },
       {
         path: 'about',

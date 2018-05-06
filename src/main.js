@@ -2,6 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 
+import BaiduMap from 'vue-baidu-map';
+
 import 'normalize.css/normalize.css';
 
 import ElementUI from 'element-ui';
@@ -14,6 +16,10 @@ import store from './store';
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+
+Vue.use(BaiduMap, {
+  ak: 'NQP6xgb88wo8wlDVZdWuWHrKFPNtvN3U',
+});
 
 /* eslint-disable no-new */
 new Vue({

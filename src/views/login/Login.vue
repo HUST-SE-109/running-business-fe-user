@@ -36,9 +36,7 @@
 </template>
 
 <script>
-import { isMobile, checkPassword } from '@/util/util';
-import Cookie from 'js-cookie';
-import { login } from '@/api/login';
+import { isMobile, checkPassword } from '@/utils/util';
 
 export default {
   data() {
@@ -100,11 +98,10 @@ export default {
       };
       if (this.canLogin) {
         this.isLoading = true;
-        login(params)
-          .then(({ data }) => {
+        this.$store.dispatch('loginByUsername', params)
+          .then((data) => {
             if (data.code === '200') {
               this.isLoading = false;
-              Cookie.set('RUN_TOKEN', data.data);
               this.$message({
                 message: '登录成功！',
                 type: 'success',

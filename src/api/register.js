@@ -1,4 +1,4 @@
-import request from '@/util/request';
+import request from '@/utils/request';
 
 // 检查账号是否已注册
 const checkUserRegistered = username => request({

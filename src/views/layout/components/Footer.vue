@@ -108,11 +108,11 @@ export default {
     list-style: none;
   }
   li {
-    color: #303133;
+    color: #909399;
     cursor: pointer;
   }
   li:hover{
-      color: #909399;
+      color: #303133;
   }
   h3 {
     color: #303133;

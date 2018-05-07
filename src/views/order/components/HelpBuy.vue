@@ -215,7 +215,7 @@ export default {
       goods: ['购买内容加载错误'],
       isGoodsLoading: false,
       hasCount: false,
-      canOrder: true,
+      canOrder: false,
       userDialogVisible: false,
       rmDialogVisible: false,
       buyKeyword: '',

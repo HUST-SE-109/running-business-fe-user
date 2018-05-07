@@ -7,10 +7,10 @@ const isIdientify = idNumber => /^((1[1-5])|(2[1-3])|(3[1-7])|(4[1-6])|(5[0-4])|
 // 密码长度验证
 const checkPassword = password => password.length >= 6 && password.length <= 18;
 
+// 更改页面 title
 const setTitle = (title = 'Running Business') => {
   window.document.title = title;
 };
-
 
 export {
   isMobile,

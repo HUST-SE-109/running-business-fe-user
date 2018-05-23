@@ -264,7 +264,6 @@ export default {
       this.recvLatitude = point.lat;
     },
     handleCountAmount() {
-      console.log(this.rmForm.requireTime);
       if (this.sourceLongitude && this.recvLongitude) {
         this.countDistanceAndMoney();
       } else {
@@ -279,19 +278,20 @@ export default {
         targetLat: this.recvLatitude,
       };
       this.hasCount = true;
-      getDistanceAndMoney(params).then(({ data }) => {
-        const { code, distance, money, minutes } = data;
-        if (code === '200') {
-          this.orderForm.distance = distance;
-          this.orderForm.amount = money;
-          this.orderForm.predictTime = minutes;
+      getDistanceAndMoney(params)
+        .then(({ data: { code, data } }) => {
+          const { distance, money, minutes } = data;
+          if (code === '200') {
+            this.orderForm.distance = distance;
+            this.orderForm.amount = money;
+            this.orderForm.predictTime = minutes;
+            this.hasCount = false;
+            this.canOrder = true;
+          }
+        }).catch(() => {
+          this.$message.error('计算失败');
           this.hasCount = false;
-          this.canOrder = true;
-        }
-      }).catch(() => {
-        this.$message.error('计算失败');
-        this.hasCount = false;
-      });
+        });
     },
     handleSubmit() {
       this.$confirm('确认下单?', '提示', {
@@ -341,7 +341,6 @@ export default {
         timeLong: this.getTimelong(isImmediately, nowTime, requireTime),
         requireTime: this.getRequireTime(isImmediately, nowTime, requireTime),
       };
-      console.log(params);
       placeOrder(1, params).then(({ data }) => {
         if (data.code === '200') {
           if (this.payType === '2') {

@@ -50,8 +50,8 @@ export default {
   },
   computed: {
     hasLogged() {
-      if (getToken()) return false;
-      return true;
+      if (getToken()) return true;
+      return false;
     },
   },
   methods: {

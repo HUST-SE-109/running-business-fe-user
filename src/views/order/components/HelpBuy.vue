@@ -1,6 +1,6 @@
 <template>
   <div class="help-buy-con">
-    <el-form :model="userForm" :rules="userRules" label-width="80px">
+    <el-form :model="userForm" :rules="userRules" ref="userForm" label-width="80px">
       <el-form-item label="购买内容">
         <el-radio-group v-show="isGoodsLoading" v-model="userForm.goods">
           <el-radio-button v-for="good in goods" :label="good" :key="good"></el-radio-button>
@@ -52,7 +52,7 @@
         </baidu-map>
       </div>
     </el-dialog>
-    <el-form :model="rmForm" :rules="rmRules" label-width="80px">
+    <el-form :model="rmForm" :rules="rmRules" ref="rmForm" label-width="80px">
       <el-form-item label="购买地址" prop="targetAddress">
         <el-input v-model="rmForm.targetAddress" placeholder="请通过定位选择购买地址">
           <el-button
@@ -174,6 +174,7 @@ export default {
       }
     };
     return {
+      // 用户表单状态
       userForm: {
         goods: '随意购',
         sourceAddress: '',
@@ -189,6 +190,7 @@ export default {
           { validator: validatePhone, trigger: 'blur' },
         ],
       },
+      // 跑男表单状态
       rmForm: {
         targetAddress: '',
         targetRemarkAddress: '',
@@ -206,12 +208,14 @@ export default {
           { required: true, message: '请输入购买要求', trigger: 'blur' },
         ],
       },
+      // 订单表单状态
       orderForm: {
         distance: '0',
         amount: '0',
         predictTime: '0',
         payType: '2',
       },
+      // 用户表单中商品类别列表
       goods: ['购买内容加载错误'],
       isGoodsLoading: false,
       hasCount: false,
@@ -221,19 +225,28 @@ export default {
       buyKeyword: '',
       rmKeyword: '',
       address: '',
+      // 收货地址经纬度
       sourceLongitude: '',
       sourceLatitude: '',
+      // 购买地址经纬度
       recvLongitude: '',
       recvLatitude: '',
     };
   },
   computed: {
+    /**
+     * 是否展示日期选择
+     *
+     * 如果为立即下单，不显示日期选择
+     * @returns {boolean}
+     */
     hasTime() {
       return this.rmForm.isImmediately === 'immediately';
     },
   },
   created() {
     this.isGoodsLoading = false;
+    // 加载用户表单商品列表
     fetchHelpBuyGoodsList()
       .then(({ data }) => {
         if (data.code === '200') {
@@ -245,24 +258,39 @@ export default {
       });
   },
   methods: {
+    /**
+     * 对于地图模态框中，查询地址后，点击列表中的任意地址触发事件处理
+     *
+     * @param address 地址信息
+     * @param point 经纬度信息
+     */
     handleUserMapSuccess({ address, point }) {
       this.buyKeyword = address;
       this.sourceLongitude = point.lng;
       this.sourceLatitude = point.lat;
     },
+    /**
+     * 地图模态框中，点击输入框后的确认触发事件处理
+     */
     handleUserMap() {
       this.userForm.sourceAddress = this.buyKeyword;
       this.userDialogVisible = false;
-    },
-    handleRmMap() {
-      this.rmForm.targetAddress = this.rmKeyword;
-      this.rmDialogVisible = false;
     },
     handleRmMapSuccess({ address, point }) {
       this.rmKeyword = address;
       this.recvLongitude = point.lng;
       this.recvLatitude = point.lat;
     },
+    handleRmMap() {
+      this.rmForm.targetAddress = this.rmKeyword;
+      this.rmDialogVisible = false;
+    },
+    /**
+     * 计算费用按钮事件处理
+     *
+     * 在收货与购买经纬度存在的情况下发起计算请求，
+     * 否则提示相关错误信息
+     */
     handleCountAmount() {
       if (this.sourceLongitude && this.recvLongitude) {
         this.countDistanceAndMoney();
@@ -270,6 +298,12 @@ export default {
         this.$message.error('请通过定位选择收货或购买地址');
       }
     },
+    /**
+     * 计算距离、跑腿费用、预计时间
+     *
+     * 收货与购买经纬度存在的情况下，发起请求，成功处理更新
+     * 订单表单相关状态，以及改变确认下单按钮为可点击状态
+     */
     countDistanceAndMoney() {
       const params = {
         sourceLng: this.sourceLongitude,
@@ -278,6 +312,7 @@ export default {
         targetLat: this.recvLatitude,
       };
       this.hasCount = true;
+<<<<<<< HEAD
       getDistanceAndMoney(params)
         .then(({ data: { code, data } }) => {
           const { distance, money, minutes } = data;
@@ -290,9 +325,22 @@ export default {
           }
         }).catch(() => {
           this.$message.error('计算失败');
+=======
+      getDistanceAndMoney(params).then(({ data: { code, data } }) => {
+        const { distance, money, minutes } = data;
+        if (code === '200') {
+          this.orderForm.distance = parseInt(distance, 10) / 1000;
+          this.orderForm.amount = money;
+          this.orderForm.predictTime = minutes;
+>>>>>>> d261a6d1dd10d7ed5da861ebd7a1841391d83c12
           this.hasCount = false;
         });
     },
+    /**
+     * 确认下单处理
+     *
+     * TODO: 对于表单的验证
+     */
     handleSubmit() {
       this.$confirm('确认下单?', '提示', {
         confirmButtonText: '确定',
@@ -307,6 +355,11 @@ export default {
         });
       });
     },
+    /**
+     * 下单
+     *
+     * TODO: 线上支付
+     */
     placeOrder() {
       const { goods, sourceAddress, sourceRemarkAddress, sourcePhone } = this.userForm;
       const {
@@ -341,6 +394,10 @@ export default {
         timeLong: this.getTimelong(isImmediately, nowTime, requireTime),
         requireTime: this.getRequireTime(isImmediately, nowTime, requireTime),
       };
+<<<<<<< HEAD
+=======
+      console.log(params)
+>>>>>>> d261a6d1dd10d7ed5da861ebd7a1841391d83c12
       placeOrder(1, params).then(({ data }) => {
         if (data.code === '200') {
           if (this.payType === '2') {
@@ -360,6 +417,9 @@ export default {
       if (isImm === 'immediately') return nowTime;
       return requireTime;
     },
+    /**
+     * 货到付款处理
+     */
     offlinePayOrder() {
       const money = this.rmForm.payAmount + this.rmForm.fee + this.orderForm.amount;
       this.$alert(`请您送达时支付：${money}元`, '订单支付', {

@@ -312,7 +312,6 @@ export default {
         targetLat: this.recvLatitude,
       };
       this.hasCount = true;
-<<<<<<< HEAD
       getDistanceAndMoney(params)
         .then(({ data: { code, data } }) => {
           const { distance, money, minutes } = data;
@@ -323,17 +322,9 @@ export default {
             this.hasCount = false;
             this.canOrder = true;
           }
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message.error('计算失败');
-=======
-      getDistanceAndMoney(params).then(({ data: { code, data } }) => {
-        const { distance, money, minutes } = data;
-        if (code === '200') {
-          this.orderForm.distance = parseInt(distance, 10) / 1000;
-          this.orderForm.amount = money;
-          this.orderForm.predictTime = minutes;
->>>>>>> d261a6d1dd10d7ed5da861ebd7a1841391d83c12
-          this.hasCount = false;
         });
     },
     /**
@@ -394,10 +385,6 @@ export default {
         timeLong: this.getTimelong(isImmediately, nowTime, requireTime),
         requireTime: this.getRequireTime(isImmediately, nowTime, requireTime),
       };
-<<<<<<< HEAD
-=======
-      console.log(params)
->>>>>>> d261a6d1dd10d7ed5da861ebd7a1841391d83c12
       placeOrder(1, params).then(({ data }) => {
         if (data.code === '200') {
           if (this.payType === '2') {

@@ -387,7 +387,7 @@ export default {
       };
       placeOrder(1, params).then(({ data }) => {
         if (data.code === '200') {
-          if (this.payType === '2') {
+          if (this.orderForm.payType === '2') {
             this.offlinePayOrder();
           }
         }

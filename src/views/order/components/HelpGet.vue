@@ -41,9 +41,9 @@
       <el-form-item label="备注地址">
         <el-input v-model="rmForm.targetRemarkAddress" placeholder="请填写具体楼号及门牌号"></el-input>
       </el-form-item>
-      <el-form-item label="收货电话" prop="sourcePhone">
+      <el-form-item label="收货电话" prop="targetPhone">
         <el-col :span="8">
-          <el-input v-model="rmForm.sourcePhone" placeholder="请输入联系人手机号码"></el-input>
+          <el-input v-model="rmForm.targetPhone" placeholder="请输入联系人手机号码"></el-input>
         </el-col>
       </el-form-item>
     </el-form>
@@ -181,14 +181,16 @@ export default {
         sourcePhone: '',
       },
       rmForm: {
+        targetPhone: '',
         targetAddress: '',
         sourceRemarkAddress: '',
         sourcePhone: '',
         payAmount: '',
-        fee: '',
+        fee: 0,
         remark: '',
         isImmediately: 'immediately',
         requireTime: '',
+        targetRemarkAddress: '',
       },
       userRules: {
         sourceAddress: [
@@ -203,7 +205,7 @@ export default {
         targetAddress: [
           { required: true, message: '请通过定位选择收货地址', trigger: 'blur' },
         ],
-        sourcePhone: [
+        targetPhone: [
           { required: true, message: '请输入手机号码', trigger: 'blur' },
           { validator: validatePhone, trigger: 'blur' },
         ],
@@ -318,6 +320,7 @@ export default {
         .catch(() => {
           this.$message.error('计算失败');
         });
+      console.log(params);
     },
     /**
        * 下单
@@ -327,6 +330,7 @@ export default {
     placeOrder() {
       const { goods, sourceAddress, sourceRemarkAddress, sourcePhone } = this.userForm;
       const {
+        targetPhone,
         targetAddress,
         targetRemarkAddress,
         payAmount,
@@ -343,6 +347,7 @@ export default {
         sourceAddress,
         sourceRemarkAddress,
         sourcePhone,
+        targetPhone,
         targetAddress,
         targetRemarkAddress,
         payAmount,

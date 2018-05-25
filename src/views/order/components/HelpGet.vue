@@ -22,7 +22,7 @@
       </el-form-item>
       <el-form-item label="取货电话" prop="sourcePhone">
         <el-col :span="8">
-          <el-input v-model="userForm.sourcePhone" placeholder="请输入联系人手机号码"></el-input>
+          <el-input v-model="userForm.sourcePhone" placeholder="请输入取货人手机号码"></el-input>
         </el-col>
       </el-form-item>
     </el-form>
@@ -43,7 +43,7 @@
       </el-form-item>
       <el-form-item label="收货电话" prop="targetPhone">
         <el-col :span="8">
-          <el-input v-model="rmForm.targetPhone" placeholder="请输入联系人手机号码"></el-input>
+          <el-input v-model="rmForm.targetPhone" placeholder="请输入收货人手机号码"></el-input>
         </el-col>
       </el-form-item>
     </el-form>
@@ -320,7 +320,6 @@ export default {
         .catch(() => {
           this.$message.error('计算失败');
         });
-      console.log(params);
     },
     /**
        * 下单
@@ -388,7 +387,7 @@ export default {
        * 货到付款处理
        */
     offlinePayOrder() {
-      const money = this.rmForm.payAmount + this.rmForm.fee + this.orderForm.amount;
+      const money = parseInt(this.rmForm.fee, 10) + this.orderForm.amount;
       this.$alert(`请您送达时支付：${money}元`, '订单支付', {
         confirmButtonText: '确定',
         callback: () => {

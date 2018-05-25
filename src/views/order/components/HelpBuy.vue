@@ -235,11 +235,11 @@ export default {
   },
   computed: {
     /**
-     * 是否展示日期选择
-     *
-     * 如果为立即下单，不显示日期选择
-     * @returns {boolean}
-     */
+       * 是否展示日期选择
+       *
+       * 如果为立即下单，不显示日期选择
+       * @returns {boolean}
+       */
     hasTime() {
       return this.rmForm.isImmediately === 'immediately';
     },
@@ -259,19 +259,19 @@ export default {
   },
   methods: {
     /**
-     * 对于地图模态框中，查询地址后，点击列表中的任意地址触发事件处理
-     *
-     * @param address 地址信息
-     * @param point 经纬度信息
-     */
+       * 对于地图模态框中，查询地址后，点击列表中的任意地址触发事件处理
+       *
+       * @param address 地址信息
+       * @param point 经纬度信息
+       */
     handleUserMapSuccess({ address, point }) {
       this.buyKeyword = address;
       this.sourceLongitude = point.lng;
       this.sourceLatitude = point.lat;
     },
     /**
-     * 地图模态框中，点击输入框后的确认触发事件处理
-     */
+       * 地图模态框中，点击输入框后的确认触发事件处理
+       */
     handleUserMap() {
       this.userForm.sourceAddress = this.buyKeyword;
       this.userDialogVisible = false;
@@ -286,11 +286,11 @@ export default {
       this.rmDialogVisible = false;
     },
     /**
-     * 计算费用按钮事件处理
-     *
-     * 在收货与购买经纬度存在的情况下发起计算请求，
-     * 否则提示相关错误信息
-     */
+       * 计算费用按钮事件处理
+       *
+       * 在收货与购买经纬度存在的情况下发起计算请求，
+       * 否则提示相关错误信息
+       */
     handleCountAmount() {
       if (this.sourceLongitude && this.recvLongitude) {
         this.countDistanceAndMoney();
@@ -299,11 +299,11 @@ export default {
       }
     },
     /**
-     * 计算距离、跑腿费用、预计时间
-     *
-     * 收货与购买经纬度存在的情况下，发起请求，成功处理更新
-     * 订单表单相关状态，以及改变确认下单按钮为可点击状态
-     */
+       * 计算距离、跑腿费用、预计时间
+       *
+       * 收货与购买经纬度存在的情况下，发起请求，成功处理更新
+       * 订单表单相关状态，以及改变确认下单按钮为可点击状态
+       */
     countDistanceAndMoney() {
       const params = {
         sourceLng: this.sourceLongitude,
@@ -328,10 +328,10 @@ export default {
         });
     },
     /**
-     * 确认下单处理
-     *
-     * TODO: 对于表单的验证
-     */
+       * 确认下单处理
+       *
+       * TODO: 对于表单的验证
+       */
     handleSubmit() {
       this.$confirm('确认下单?', '提示', {
         confirmButtonText: '确定',
@@ -347,10 +347,10 @@ export default {
       });
     },
     /**
-     * 下单
-     *
-     * TODO: 线上支付
-     */
+       * 下单
+       *
+       * TODO: 线上支付
+       */
     placeOrder() {
       const { goods, sourceAddress, sourceRemarkAddress, sourcePhone } = this.userForm;
       const {
@@ -405,8 +405,8 @@ export default {
       return requireTime;
     },
     /**
-     * 货到付款处理
-     */
+       * 货到付款处理
+       */
     offlinePayOrder() {
       const money = this.rmForm.payAmount + this.rmForm.fee + this.orderForm.amount;
       this.$alert(`请您送达时支付：${money}元`, '订单支付', {
@@ -416,6 +416,7 @@ export default {
             type: 'success',
             message: '请您耐心等待送达',
           });
+          this.$route.go(0);
         },
       });
     },

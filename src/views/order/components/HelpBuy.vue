@@ -416,7 +416,7 @@ export default {
             type: 'success',
             message: '请您耐心等待送达',
           });
-          this.$router.go(0);
+          // this.$router.go(0);
         },
       });
     },

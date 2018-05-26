@@ -137,6 +137,33 @@ export const appRouter = [
         ],
       },
       {
+        path: 'own-order',
+        title: '查询订单',
+        name: 'own-order',
+        redirect: '/own-order/my-order',
+        component: () => import('@/views/own-order/OwnOrder.vue'),
+        children: [
+          {
+            path: 'my-order',
+            title: '我的订单',
+            name: 'my-order',
+            meta: {
+              title: '查询订单-我的订单',
+            },
+            component: () => import('@/views/own-order/components/MyOrder.vue'),
+          },
+          {
+            path: 'refund',
+            title: '退款信息',
+            name: 'refund',
+            meta: {
+              title: '查询订单-退款信息',
+            },
+            component: () => import('@/views/own-order/components/Refund.vue'),
+          },
+        ],
+      },
+      {
         path: 'about',
         title: '关于跑商',
         name: 'about',

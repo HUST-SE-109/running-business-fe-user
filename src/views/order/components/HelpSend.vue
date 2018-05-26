@@ -9,7 +9,11 @@
       </el-form-item>
       <el-form-item label="收货地址" prop="sourceAddress">
         <el-input v-model="userForm.sourceAddress" placeholder="请通过定位选择收货地址">
-          <el-button slot="append" icon="el-icon-location-outline" @click="userDialogVisible = true">定位
+          <el-button
+            slot="append"
+            icon="el-icon-location-outline"
+            @click="userDialogVisible = true"
+          >定位
           </el-button>
         </el-input>
       </el-form-item>
@@ -30,14 +34,22 @@
         </el-input>
         <baidu-map center="北京">
           <bm-view class="map"></bm-view>
-          <bm-local-search :keyword="buyKeyword" :auto-viewport="true" @infohtmlset="handleUserMapSuccess"></bm-local-search>
+          <bm-local-search
+            :keyword="buyKeyword"
+            :auto-viewport="true"
+            @infohtmlset="handleUserMapSuccess">
+          </bm-local-search>
         </baidu-map>
       </div>
     </el-dialog>
     <el-form :model="rmForm" :rules="rmRules" ref="rmForm" label-width="80px">
       <el-form-item label="发货地址" prop="targetAddress">
         <el-input v-model="rmForm.targetAddress" placeholder="请通过定位选择发货地址">
-          <el-button slot="append" icon="el-icon-location-outline" @click="rmDialogVisible = true">定位
+          <el-button
+            slot="append"
+            icon="el-icon-location-outline"
+            @click="rmDialogVisible = true"
+          >定位
           </el-button>
         </el-input>
       </el-form-item>
@@ -59,7 +71,11 @@
         </el-col>
         <el-col v-show="hasTime" class="warn-message" :span="17" :offset="1">* 跑男接单后立即发货</el-col>
         <el-col v-show="!hasTime" :span="17" :offset="1">
-          <el-date-picker v-model="rmForm.requireTime" type="datetime" placeholder="选择预约时间" value-format="timestamp">
+          <el-date-picker
+            v-model="rmForm.requireTime"
+            type="datetime"
+            placeholder="选择预约时间"
+            value-format="timestamp">
           </el-date-picker>
         </el-col>
       </el-form-item>
@@ -72,7 +88,11 @@
         </el-input>
         <baidu-map center="北京">
           <bm-view class="map"></bm-view>
-          <bm-local-search :keyword="rmKeyword" :auto-viewport="true" @infohtmlset="handleRmMapSuccess"></bm-local-search>
+          <bm-local-search
+            :keyword="rmKeyword"
+            :auto-viewport="true"
+            @infohtmlset="handleRmMapSuccess">
+          </bm-local-search>
         </baidu-map>
       </div>
     </el-dialog>
@@ -105,17 +125,17 @@
 import {
   fetchHelpSendGoodsList,
   getDistanceAndMoney,
-  placeOrder
-} from "@/api/order";
-//验证电话号
-import { isMobile } from "@/utils/util";
+  placeOrder,
+} from '@/api/order';
+// 验证电话号
+import { isMobile } from '@/utils/util';
 
 export default {
-  name: "HelpBuy",
+  name: 'HelpBuy',
   data() {
     const validatePhone = (rule, value, callback) => {
       if (!isMobile(value)) {
-        callback(new Error("请输入正确格式手机号码"));
+        callback(new Error('请输入正确格式手机号码'));
       } else {
         callback();
       }
@@ -123,57 +143,57 @@ export default {
     return {
       // 用户表单状态
       userForm: {
-        types: "生活用品",
-        sourceAddress: "",
-        sourceRemarkAddress: "",
-        sourcePhone: ""
+        types: '生活用品',
+        sourceAddress: '',
+        sourceRemarkAddress: '',
+        sourcePhone: '',
       },
       userRules: {
         sourceAddress: [
-          { required: true, message: "请通过定位选择收货地址", trigger: "blur" }
+          { required: true, message: '请通过定位选择收货地址', trigger: 'blur' },
         ],
         sourcePhone: [
-          { required: true, message: "请输入手机号码", trigger: "blur" },
-          { validator: validatePhone, trigger: "blur" }
-        ]
+          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          { validator: validatePhone, trigger: 'blur' },
+        ],
       },
       // 跑男表单状态
       rmForm: {
-        targetAddress: "",
-        targetRemarkAddress: "",
-        remark: "",
-        isImmediately: "immediately",
-        requireTime: ""
+        targetAddress: '',
+        targetRemarkAddress: '',
+        remark: '',
+        isImmediately: 'immediately',
+        requireTime: '',
       },
       rmRules: {
         targetAddress: [
-          { required: true, message: "请通过定位选择购买地址", trigger: "blur" }
+          { required: true, message: '请通过定位选择购买地址', trigger: 'blur' },
         ],
-        remark: [{ required: true, message: "请输入购买要求", trigger: "blur" }]
+        remark: [{ required: true, message: '请输入购买要求', trigger: 'blur' }],
       },
       // 订单表单状态
       orderForm: {
-        distance: "0",
-        amount: "0",
-        predictTime: "0",
-        payType: "2"
+        distance: '0',
+        amount: '0',
+        predictTime: '0',
+        payType: '2',
       },
       // 用户表单中商品类别列表
-      types: ["商品类型加载错误"],
+      types: ['商品类型加载错误'],
       isTypesLoading: false,
       hasCount: false,
       canOrder: false,
       userDialogVisible: false,
       rmDialogVisible: false,
-      buyKeyword: "",
-      rmKeyword: "",
-      address: "",
+      buyKeyword: '',
+      rmKeyword: '',
+      address: '',
       // 收货地址经纬度
-      sourceLongitude: "",
-      sourceLatitude: "",
+      sourceLongitude: '',
+      sourceLatitude: '',
       // 购买地址经纬度
-      recvLongitude: "",
-      recvLatitude: ""
+      recvLongitude: '',
+      recvLatitude: '',
     };
   },
   computed: {
@@ -184,15 +204,15 @@ export default {
      * @returns {boolean}
      */
     hasTime() {
-      return this.rmForm.isImmediately === "immediately";
-    }
+      return this.rmForm.isImmediately === 'immediately';
+    },
   },
   created() {
     this.isTypesLoading = false;
     // 加载用户表单商品列表
     fetchHelpSendGoodsList()
       .then(({ data }) => {
-        if (data.code === "200") {
+        if (data.code === '200') {
           this.isTypesLoading = true;
           this.types = data.data;
         }
@@ -239,7 +259,7 @@ export default {
       if (this.sourceLongitude && this.recvLongitude) {
         this.countDistanceAndMoney();
       } else {
-        this.$message.error("请通过定位选择收货或购买地址");
+        this.$message.error('请通过定位选择收货或购买地址');
       }
     },
     /**
@@ -253,13 +273,13 @@ export default {
         sourceLng: this.sourceLongitude,
         sourceLat: this.sourceLatitude,
         targetLng: this.recvLongitude,
-        targetLat: this.recvLatitude
+        targetLat: this.recvLatitude,
       };
       this.hasCount = true;
       getDistanceAndMoney(params)
         .then(({ data: { code, data } }) => {
           const { distance, money, minutes } = data;
-          if (code === "200") {
+          if (code === '200') {
             this.orderForm.distance = distance;
             this.orderForm.amount = money;
             this.orderForm.predictTime = minutes;
@@ -268,7 +288,7 @@ export default {
           }
         })
         .catch(() => {
-          this.$message.error("计算失败");
+          this.$message.error('计算失败');
         });
     },
     /**
@@ -277,18 +297,18 @@ export default {
      * TODO: 对于表单的验证
      */
     handleSubmit() {
-      this.$confirm("确认下单?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('确认下单?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
       })
         .then(() => {
           this.placeOrder();
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消"
+            type: 'info',
+            message: '已取消',
           });
         });
     },
@@ -302,14 +322,14 @@ export default {
         types,
         sourceAddress,
         sourceRemarkAddress,
-        sourcePhone
+        sourcePhone,
       } = this.userForm;
       const {
         targetAddress,
         targetRemarkAddress,
         remark,
         requireTime,
-        isImmediately
+        isImmediately,
       } = this.rmForm;
       const { distance, amount, payType } = this.orderForm;
       const nowTime = new Date().getTime();
@@ -330,27 +350,27 @@ export default {
         recvLongitude: this.recvLongitude,
         recvLatitude: this.recvLatitude,
         timeLong: this.getTimelong(isImmediately, nowTime, requireTime),
-        requireTime: this.getRequireTime(isImmediately, nowTime, requireTime)
+        requireTime: this.getRequireTime(isImmediately, nowTime, requireTime),
       };
       placeOrder(1, params)
         .then(({ data }) => {
-          if (data.code === "200") {
-            if (this.payType === "2") {
+          if (data.code === '200') {
+            if (this.payType === '2') {
               this.offlinePayOrder();
             }
           }
         })
         .catch(() => {
-          this.$message.error("下单失败");
+          this.$message.error('下单失败');
           this.hasCount = false;
         });
     },
     getTimelong(isImm, nowTime, requireTime) {
-      if (isImm === "immediately") return "0";
+      if (isImm === 'immediately') return '0';
       return requireTime - nowTime;
     },
     getRequireTime(isImm, nowTime, requireTime) {
-      if (isImm === "immediately") return nowTime;
+      if (isImm === 'immediately') return nowTime;
       return requireTime;
     },
     /**
@@ -369,7 +389,7 @@ export default {
     //     }
     //   });
     // }
-  }
+  },
 };
 </script>
 

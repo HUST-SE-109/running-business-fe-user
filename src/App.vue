@@ -10,6 +10,14 @@ export default {
 };
 </script>
 <style lang="less">
+  html, body {
+    height: 100%;
+  }
+  #app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
   [class^="el-icon-fa"], [class*=" el-icon-fa"] {
     font-family: "FontAwesome" !important;
     display: inline-block;

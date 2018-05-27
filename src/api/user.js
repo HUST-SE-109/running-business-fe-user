@@ -69,6 +69,12 @@ const getUserBalance = () => request({
   method: 'get',
 });
 
+const fetchUserOrderList = params => request({
+  url: '/order/user',
+  method: 'get',
+  params,
+});
+
 export {
   getUserInfo,
   updateUserInfo,
@@ -80,4 +86,5 @@ export {
   getUserToken,
   deleteUserToken,
   getUserBalance,
+  fetchUserOrderList,
 };

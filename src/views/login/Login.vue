@@ -107,9 +107,9 @@ export default {
                 type: 'success',
               });
               this.$router.push({ path: '/' });
-            } else if (data.code === '1001003') {
+            } else if (data.code === '1001002') {
               this.isLoading = false;
-              this.$message.error('密码错误');
+              this.$message.error('账号或密码错误');
             }
           });
       }

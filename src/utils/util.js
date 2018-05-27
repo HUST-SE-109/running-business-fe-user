@@ -12,9 +12,21 @@ const setTitle = (title = 'Running Business') => {
   window.document.title = title;
 };
 
+const formatTime = (date) => {
+  const y = `${date.getFullYear()}-`;
+  const month = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`;
+  const d = `${date.getDate()} `;
+  const h = `${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:`;
+  const m = `${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}:`;
+  const s = `${date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()}`;
+
+  return y + month + d + h + m + s;
+};
+
 export {
   isMobile,
   isIdientify,
   checkPassword,
   setTitle,
+  formatTime,
 };

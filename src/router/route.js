@@ -101,6 +101,69 @@ export const appRouter = [
         ],
       },
       {
+        path: 'center',
+        title: '个人中心',
+        name: 'center',
+        redirect: '/center/info',
+        component: () => import('@/views/user-center/UserCenter.vue'),
+        children: [
+          {
+            path: 'info',
+            title: '个人信息',
+            name: 'info',
+            meta: {
+              title: '个人中心-个人信息',
+            },
+            component: () => import('@/views/user-center/components/UserInfo.vue'),
+          },
+          {
+            path: 'address',
+            title: '地址管理',
+            name: 'address',
+            meta: {
+              title: '个人中心-地址管理',
+            },
+            component: () => import('@/views/user-center/components/AddressMgr.vue'),
+          },
+          {
+            path: 'password',
+            title: '修改密码',
+            name: 'password',
+            meta: {
+              title: '个人中心-修改密码',
+            },
+            component: () => import('@/views/user-center/components/UpdatePassword.vue'),
+          },
+        ],
+      },
+      {
+        path: 'own-order',
+        title: '查询订单',
+        name: 'own-order',
+        redirect: '/own-order/my-order',
+        component: () => import('@/views/own-order/OwnOrder.vue'),
+        children: [
+          {
+            path: 'my-order',
+            title: '我的订单',
+            name: 'my-order',
+            meta: {
+              title: '查询订单-我的订单',
+            },
+            component: () => import('@/views/own-order/components/MyOrder.vue'),
+          },
+          {
+            path: 'refund',
+            title: '退款信息',
+            name: 'refund',
+            meta: {
+              title: '查询订单-退款信息',
+            },
+            component: () => import('@/views/own-order/components/Refund.vue'),
+          },
+        ],
+      },
+      {
         path: 'about',
         title: '关于跑商',
         name: 'about',

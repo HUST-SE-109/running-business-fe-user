@@ -19,13 +19,13 @@
 
       <el-row v-if="hasLogged">
         <img class="user-avatar" src="@/assets/avatar.jpeg" alt="头像QwQ">
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-            下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+            功能列表<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>查看订单</el-dropdown-item>
+            <el-dropdown-item command="center">个人中心</el-dropdown-item>
+            <el-dropdown-item command="own-order">查看订单</el-dropdown-item>
             <el-dropdown-item divided>退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -50,8 +50,8 @@ export default {
   },
   computed: {
     hasLogged() {
-      if (getToken()) return false;
-      return true;
+      if (getToken()) return true;
+      return false;
     },
   },
   methods: {
@@ -60,6 +60,14 @@ export default {
     },
     goRegister() {
       this.$router.push({ path: '/register' });
+    },
+    handleCommand(command) {
+      if (command === 'center') {
+        this.$router.push({ path: '/center' });
+      }
+      if (command === 'own-order') {
+        this.$router.push({ path: '/own-order' });
+      }
     },
   },
 };

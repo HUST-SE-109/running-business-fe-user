@@ -64,6 +64,7 @@ const getDistanceAndMoney = params => request.get('/index/distance/money', {
   params,
 });
 
+
 export {
   fetchHelpBuyGoodsList,
   fetchHelpSendGoodsList,
